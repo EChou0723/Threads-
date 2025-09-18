@@ -150,12 +150,6 @@ MIT License - 詳見 [LICENSE](LICENSE) 檔案
 - [Pandas](https://pandas.pydata.org/) - 資料處理工具
 - [白話投資](https://www.threads.com/@make_investment_easy) - 內容來源
 
-## 📞 聯繫資訊
-
-如有問題或建議，歡迎聯繫：
-- GitHub Issues: [專案 Issues 頁面]
-- Email: [你的信箱]
-
 ---
 
 ⭐ 如果這個專案對你有幫助，請給個星星支持！
