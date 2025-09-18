@@ -7,17 +7,14 @@ import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-
 # Telegram 設定，已由助理代入你的資訊
-BOT_TOKEN = '8355824646:AAGYwydLyh_43JgBmqWUTcvhNPeY_rzlUYk'
-CHAT_ID = '1474955550'
-
+BOT_TOKEN = '輸入你的 Token '
+CHAT_ID = '輸入你的 CHAY_ID'
 def send_telegram(msg):
     """發送訊息到 Telegram"""
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     params = {"chat_id": CHAT_ID, "text": msg}
     requests.get(url, params=params)
-
 def extract_post_and_replies(driver, url, username):
     """從 Threads 貼文抓取主要內容與留言，返回字串"""
     driver.get(url)
@@ -45,7 +42,6 @@ def extract_post_and_replies(driver, url, username):
         print(f"[ERROR] Parse error: {e} url: {url}")
         return f"FETCH_ERROR: {e}"
     return '\n'.join(list(dict.fromkeys(items)))
-
 def detect_empty_posts(input_csv, output_csv):
     df = pd.read_csv(input_csv)
     error_conditions = ["", "LOGIN_REQUIRED", "NO_TEXT_FOUND", "nan"]
@@ -56,7 +52,6 @@ def detect_empty_posts(input_csv, output_csv):
     else:
         print("所有內容都已正常抓取完成！")
     return len(urls)
-
 if __name__ == "__main__":
     # 請將下方路徑修改成你實際 iCloud 桌面的資料夾路徑
     base_dir = "/Users/yourbaby/Library/Mobile Documents/com~apple~CloudDocs/Desktop/Python 爬 Threads 資料"
