@@ -1,0 +1,41 @@
+name: Threads Monitor
+
+on:
+  schedule:
+    # 每天 UTC 07:00 執行 (台灣時間 15:00)
+    - cron: '0 7 * * *'
+  workflow_dispatch: # 允許手動觸發
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Run monitor
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+      run: python github_threads_monitor.py
+      
+    - name: Commit processed posts
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add processed_posts.json || true
+        git commit -m "Update processed posts [$(date)]" || true
+        git push || true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
